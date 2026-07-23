@@ -15,10 +15,40 @@
   --radius: 0px;
 }
 
+:root {
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #FAFAFA;
+  --color-surface: #F2F2F2;
+  --color-surface-container: #E8E8E8;
+  --color-text-primary: #0A0A0A;
+  --color-text-secondary: #6B6B6B;
+  --color-border: #DEDEDE;
+  --color-hover: #D4D4D4;
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
 }
 
 .dot-grid {
@@ -34,4 +64,16 @@ body {
     var(--color-border) 0 4px,
     transparent 4px 8px
   );
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px) }
+  40% { transform: translateX(3px) }
+  60% { transform: translateX(-2px) }
+  80% { transform: translateX(2px) }
+}
+
+.animate-shake {
+  animation: shake 0.35s ease-in-out;
 }
