@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
+import ThemeToggle from "./ThemeToggle.vue";
+import { useNav } from "../composables/useNav";
 
-const navLinks = ["About", "Projects", "Stacks", "Contact"];
-const active = ref("About");
+const { navLinks, active, setActive } = useNav();
 </script>
 
 <template>
@@ -13,22 +13,23 @@ const active = ref("About");
       <p class="font-mono text-xs tracking-wider mb-8">VCNT_DEV</p>
       <nav class="flex flex-col gap-3">
         <a
-          href="#"
           v-for="link in navLinks"
-          :key="link"
+          :key="link.id"
+          :href="`#${link.id}`"
+          @click="setActive(link.id)"
           class="font-mono text-sm"
           :class="
-            active === link
+            active === link.id
               ? 'text-text-primary font-medium border-b border-text-primary w-fit'
               : 'text-text-secondary hover:text-text-primary'
           "
         >
-          {{ link }}
+          {{ link.label }}
         </a>
       </nav>
     </div>
 
-    
+    <ThemeToggle />
   </aside>
 </template>
 
